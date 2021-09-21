@@ -1,0 +1,134 @@
+{% extends "login_app/base.html"%}
+{% load static %}
+
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4"> 
+     <div class="row">
+          <h2>WELCOME TO THE WALL!</h2>
+     </div> 
+     <div class="row row-cols-1 row-cols-md-2 g-4">        
+          <div class="col col-sm-12 col-md-6">
+               <form action="register" method="POST">
+                    {% csrf_token %}
+                    <div class="card border-primary">
+                         <div class="card-header text-white bg-primary">
+                              <h2 class="card-title">Register</h2>
+                         </div>
+                         <div class="card-body">
+                              <div class="mb-3 row">
+                                   <label for="first_name" class="col-sm-4 col-form-label  fw-bold">Nombre:</label>
+                                   <div class="col-sm-8">
+                                        {% if request.session.firstName %}
+                                        <input class="form-control" type="text" name="first_name"  id="first_name" maxlength=32 required value='{{request.session.firstName}}'>
+                                        {% else %}
+                                        <input class="form-control" type="text" name="first_name"  id="first_name" required maxlength=32 placeholder='Nombre' >
+                                        {% endif %}
+                                   </div>
+                              </div>
+                              <div class="mb-3 row">
+                                   <label for="last_name" class="col-sm-4 col-form-label  fw-bold">Apellido:</label>
+                                   <div class="col-sm-8">
+                                        {% if request.session.lastName %}
+                                        <input class="form-control" type="text" name="last_name"  id="last_name" maxlength=32 required value={{request.session.lastName}} >
+                                        {% else %}
+                                        <input class="form-control" type="text" name="last_name"  id="last_name" maxlength=32 required placeholder='Apellido' >
+                                        {% endif %}
+                                   </div>
+                              </div>
+                              <div class="mb-3 row">
+                                   <label for="email" class="col-sm-4 col-form-label  fw-bold">Email:</label>
+                                   <div class="col-sm-8">
+                                        {% if request.session.email %}
+                                        <input class="form-control" type="text" name="email"  id="email" maxlength=32 required value={{request.session.email}} >
+                                        {% else %}
+                                        <input class="form-control" type="text" name="email"  id="email" maxlength=32 required placeholder='Email' >
+                                        {% endif %}
+                                   </div>
+                              </div>
+                              <div class="mb-3 row">
+                                   <label for="password" class="col-sm-4 col-form-label  fw-bold">Password:</label>
+                                   <div class="col-sm-8">
+                                        <input class="form-control" type="password"  name="password" id="password" required>
+                                   </div>
+                                   <p>* Password should be at least 8 characters</p>
+                              </div>
+                              <div class="mb-3 row">
+                                   <label for="password_confirm" class="col-sm-4 col-form-label  fw-bold">Confirm PW:</label>
+                                   <div class="col-sm-8">
+                                        <input class="form-control" type="password"  name="password_confirm" id="password_confirm" required>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="card-footer text-center">
+                              <div class="row">
+                                   <!-- <div class="col col-4"></div> -->
+                                   <div class="d-grid gap-2 col-4 mx-auto">
+                                        <input class="btn btn-primary" type="submit" value="Registreme">
+                                        <input class="btn btn-secondary" type="reset" value="Limpiar">
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </form>
+          </div>
+          <div class="col col-sm-12 col-md-6">
+               <form action="login" method="POST">
+                    {% csrf_token %}
+                    <div class="card border-info">
+                         <div class="card-header text-white bg-info">
+                              <h2 class="card-title">Login</h2>
+                         </div>
+                         <div class="card-body">
+                              <div class="mb-3 row">
+                                   <label for="email_login" class="col-sm-3 col-form-label  fw-bold">Email:</label>
+                                   <div class="col-sm-9">
+                                        <input class="form-control" type="text"  name="email_login" id="email_login" maxlength=100 required>
+                                   </div>
+                              </div>
+                              <div class="mb-3 row">
+                                   <label for="password_login" class="col-sm-3 col-form-label  fw-bold">Password:</label>
+                                   <div class="col-sm 9">
+                                        <input class="form-control" type="password"  name="password_login" id="password_login" required>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="card-footer text-center border-0">
+                              <div class="row">
+                                   <!-- <div class="col col-8"></div> -->
+                                   <div class="d-grid gap-2 col-4 mx-auto">
+                                        <input class="btn btn-info" type="submit" value="Login">
+                                        <input class="btn btn-secondary" type="reset" value="Limpiar">
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </form>
+               {% if messages %}
+               {% if request.session.level_message == 'alert-success' %}
+               <div class="card border-success mt-3">
+               {% else %}
+               <div class="card border-danger mt-3">
+               {% endif %}
+                    <div class="card-header mb-3">
+                         <h3>Registro de usuario</h3>
+                    </div>
+                    <div class="card-body">
+                         <div class="alert {{request.session.level_message}} alert-dismissible"   role="alert" >
+                              <ul>
+                                   {% for message in messages %}
+                                        <li><strong>{{ message }}</strong></li>    
+                                   {% endfor %}                   
+                              </ul>
+                              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                         </div>
+                    </div>
+               </div>
+               {% endif %}    
+          
+          </div>
+     </div>
+</div>
+{% endblock %}

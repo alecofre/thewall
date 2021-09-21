@@ -1,0 +1,28 @@
+{% load static %}
+
+<nav>
+
+     <div class="container">
+          <div class="row bg-info mt-3 mb-3">
+          <div class="col col-4">
+               <h2>
+                    CODING DOJO WALL
+               </h2>
+          </div>
+          <div class="col col-3"></div>
+          <div class="col col-4  mx-auto text-center">
+               {% if request.session.user %}
+               <h3>Welcome, {{request.session.user.first_name}} </h3>
+               {% else %}
+               <h3>Welcome, Guess!</h3>
+               <a class="" href='/'>LOGIN HERE</a>
+               {% endif %}
+          </div>
+          <div class="col col-1">
+          <a href="logout">LOGOUT</a>
+     </div>
+     </div>
+     
+</div>
+
+</nav>
